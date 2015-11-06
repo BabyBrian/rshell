@@ -1,2 +1,3 @@
 # rshell
-Homework 1 repository
+
+the command "exit" doesn't work when there is another command at the same time.
