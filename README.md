@@ -13,7 +13,7 @@ Possible errors can occurs with invalid sentence.
 
 
 #Installation 
-Follow thw steps on Ilearn
+Follow the steps on Ilearn
 
 
 #History 
