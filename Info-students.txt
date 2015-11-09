@@ -1,0 +1,12 @@
+name1 = ADAM Brian
+
+ucrnetid1 = badam006
+
+name2 = MADRE Denis
+
+ucrnetid2 = dmadr004
+
+
+github = Babybrian
+
+giturl = https://www.github.com/Babybrian/rshell.git
