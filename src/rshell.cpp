@@ -54,15 +54,90 @@ vector <string> splitCommands(string content)
 	//Fonction for executing the commands in the terminal
 void ExecCmd(string cmd)
 {
+
+string e = "-e ";
+string f = "-f ";
+string d = "-d ";
+
 	removeComment(cmd);	  //Erase the comments
-	system(cmd.c_str());  //Execute commands
+
+		//case there is a test
+ 	if ((cmd.find('[')!=string::npos) || (cmd.find("test")!= string::npos))
+ 	{
+
+ 			// case you have the -e, or you don't have neither -d, nor -f
+		if ((cmd.find(e)!=string::npos) || (cmd.find(f)==string::npos && cmd.find(d)==string::npos ))// checks if the file/directory exists
+		{
+				// if you don't have the -e, insert it 
+			if (cmd.find(e)==string::npos) 
+			{
+				size_t index = cmd.find("/");
+				cmd = cmd.insert(index, e );
+			}
+
+				// file exists
+			if (system(cmd.c_str()) == 0)
+			{
+					cout << "Your file exist"<< endl;
+			}
+				//file doesn't exists
+			else if (system(cmd.c_str()) == 256) // return 256 because system() return the exit multiplied by 256 
+			{
+					cout<< "You file doesn't exist" << endl;
+	  		}
+			else
+			{
+				  	cout << "Test invalid" << endl;
+			}
+		}
+
+			// checks if the file/directory exists and is a regular file
+		else if ( cmd.find(f)!=string::npos)  
+		{
+
+			if (system(cmd.c_str()) == 0)
+				{
+					cout << "Your file exists and is a regular file"<< endl;
+				}
+			else if (system(cmd.c_str()) == 256) // return 256 because system() return the exit multiplied by 256 
+				{
+					cout<< "Your file/directory doesn't exist or isn't a regular file" << endl;
+	  			}
+	 		 else
+				{
+				  	cout << "Test invalid" << endl;
+				}
+		}
+
+		 // checks if the file/directory exists and is a directory
+	else if (cmd.find(d)!=string::npos) 
+	{
+
+			if (system(cmd.c_str()) == 0)//
+				{
+					cout << "Your directory exists"<< endl;
+				}
+			else if (system(cmd.c_str()) == 256) // return 256 because system() return the exit multiplied by 256 
+				{
+					cout<< "You file/directory doesn't exist or isn't a directory" << endl;
+	  			}
+	 		 else
+				{
+				  	cout << "Test invalid" << endl;
+				}
+		} 
+	}
+		//case there is no test, basic command
+ 	else
+ 	{
+ 		system(cmd.c_str());  //Execute commands
+ 	}
 }
 
 int main()
 {
 	//Variables declarations
-std::string cmd;
-
+string cmd;
 
 	//Definition of items for username
 char username[20];
@@ -75,7 +150,7 @@ gethostname(hostname, sizeof(hostname)-1);
 vector<string> vectCommands; 
 
 	//Introduction
-cout << "Homework 1" << endl;
+cout << "Homework 2" << endl;
 cout << "Students: MADRE Denis ADAM Brian" << endl;
 cout << "Please enter a command in the terminal :" << endl;
 
@@ -93,7 +168,9 @@ cout << " " << endl;
 vectCommands=splitCommands(cmd); 
 
 for (vector<string>::iterator it = vectCommands.begin(); it != vectCommands.end(); it++)
+{
  ExecCmd(*it); //Execute each command from the vector
+}
 }
 	return 0;
 }
